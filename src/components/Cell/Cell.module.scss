@@ -1,0 +1,32 @@
+.cell{
+    display: grid;
+    place-items: center;
+    width: 62px;
+    height: 62px;
+    background-color: transparent;
+    border: 1px solid $darkGray;
+    font-weight: 800;
+    user-select: none;
+    @for $i from 0 through 5 {
+        &.animation#{$i} {
+            transition: background-color #{$i*0.5}s ease-in-out;
+        }
+    }
+    
+    &.green{
+        background-color: $green;
+        border: 1px solid $green;
+        transform: rotateY(360deg);
+
+    }
+    &.yellow{
+        background-color: $spellingBeeYellow;
+        border: 1px solid $spellingBeeYellow;
+        transform: rotateY(360deg);
+    }
+    &.gray{
+        background-color: $gray;
+        border: 1px solid $gray;
+        transform: rotateY(360deg);
+    }
+}

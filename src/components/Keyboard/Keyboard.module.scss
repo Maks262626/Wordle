@@ -1,0 +1,78 @@
+.keyboard {
+    display: grid;
+    place-items: center;
+    text-align: center;
+    gap: 10px;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    grid-template-areas: 
+        "l1 l1 l1"
+        "l2 l2 l2"
+        "enter l3 delete";
+}
+
+.keyboardKey {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    color: #fff;
+    font-size: 20px;
+    height: 50px;
+    min-width: 35px;
+    padding: 0 15px;
+    background-color: $black;
+    border-radius: 10px;
+    user-select: none;
+    transition: background-color 1s ease-in-out;
+    &:hover {
+        background-color: $black-3;
+        transition: .1s;
+    }
+
+    &.green {
+        background-color: $green;
+    }
+
+    &.yellow {
+        background-color: $spellingBeeYellow;
+    }
+
+    &.gray {
+        background-color: $gray;
+    }
+}
+
+.row {
+    display: flex;
+    gap: 10px;
+    &:nth-child(1) {
+        grid-area: l1;
+    }
+
+    &:nth-child(2) {
+        grid-area: l2;
+    }
+
+    &:nth-child(3) {
+        grid-area: l3;
+
+    }
+
+    &:nth-child(4) {
+        grid-area: enter;
+    }
+    &:nth-child(5) {
+        grid-area: delete;
+    }
+}
+
+.deleteBtn {
+    display: grid;
+    place-items: center;
+
+    img {
+        height: 70%;
+        max-width: 30px;
+    }
+}
