@@ -80,22 +80,26 @@ const Keyboard = () => {
     },[board])
     return (
         <div className={s.keyboard}>
-            {keyboardLayout.map((row, rowIndex) => (
-                <KeyboardRow key={rowIndex} letters={row} />
-            ))}
-            <div className={s.row}>
-                <div
+            <div className={`${s.row}`}>
+                <KeyboardRow letters={keyboardLayout[0]} />
+            </div>
+            <div className={`${s.row}`}>
+                <div className={`${s.keyboardKey} ${s.keyboardKeyEmpty}` }></div>
+                <KeyboardRow letters={keyboardLayout[1]} />
+                <div className={`${s.keyboardKey} ${s.keyboardKeyEmpty}` }></div>
+            </div>
+            <div className={`${s.row}`}>
+                <button
                     className={s.keyboardKey}
                     onClick={hadleClickEnter}>
                     Enter
-                </div>
-            </div>
-            <div className={s.row}>
-                <div
+                </button>
+                <KeyboardRow letters={keyboardLayout[2]} />
+                <button
                     className={`${s.keyboardKey} ${s.deleteBtn}`}
                     onClick={hadleClickDelete}>
                     <img src={deleteIcon} alt="deleteIcon" />
-                </div>
+                </button>
             </div>
         </div>
     );

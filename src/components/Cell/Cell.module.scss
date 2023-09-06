@@ -7,6 +7,10 @@
     border: 1px solid $darkGray;
     font-weight: 800;
     user-select: none;
+    @media (max-width: 380px){
+        width: 52px;
+        height: 52px;
+    }
     @for $i from 0 through 5 {
         &.animation#{$i} {
             transition: background-color #{$i*0.5}s ease-in-out;

@@ -1,14 +1,13 @@
 .keyboard {
-    display: grid;
-    place-items: center;
+    display: flex;
+    flex-direction: column;
     text-align: center;
-    gap: 10px;
+    gap: 5px;
     margin-top: 40px;
     margin-bottom: 20px;
-    grid-template-areas: 
-        "l1 l1 l1"
-        "l2 l2 l2"
-        "enter l3 delete";
+    width: 100%;
+    min-width: 320px;
+    max-width: 500px;
 }
 
 .keyboardKey {
@@ -19,8 +18,7 @@
     color: #fff;
     font-size: 20px;
     height: 50px;
-    min-width: 35px;
-    padding: 0 15px;
+    flex: 1;
     background-color: $black;
     border-radius: 10px;
     user-select: none;
@@ -45,7 +43,9 @@
 
 .row {
     display: flex;
-    gap: 10px;
+    width: 100%;
+    justify-content: center;
+    gap: 5px;
     &:nth-child(1) {
         grid-area: l1;
     }
@@ -66,13 +66,16 @@
         grid-area: delete;
     }
 }
-
 .deleteBtn {
     display: grid;
     place-items: center;
-
+    padding: 0 5px;
     img {
         height: 70%;
         max-width: 30px;
     }
+}
+.keyboardKeyEmpty{
+    flex: .5;
+    background-color: transparent;
 }

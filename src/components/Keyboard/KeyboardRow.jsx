@@ -27,16 +27,15 @@ const KeyboardRow = ({ letters }) => {
         }
     }
     return (
-        <div className={s.row}>
-            {letters.map((letter, i) => (
+        letters.map((letter, i) => (
 
-                <button key={i}
-                    className={`${s.keyboardKey} ${s[setKeyColor(letter)]}` }
-                    onClick={() => { hadleClick(letter) }}>
-                    {letter}
-                </button>
-            ))}
-        </div>
+            <button key={i}
+                className={`${s.keyboardKey} ${s[setKeyColor(letter)]}` }
+                onClick={() => { hadleClick(letter) }}>
+                {letter}
+            </button>
+        ))
+     
     );
 };
 export default KeyboardRow
