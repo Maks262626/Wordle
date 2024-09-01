@@ -21,14 +21,13 @@ const KeyboardRow = ({ letters }) => {
         dispatch(setLetter(letter));
     }
     const setKeyColor = (letter) => {
-        const keyItem = board.flat().find(el => el.letter === letter);
-        if(keyItem){
-            return keyItem.color;
-        }
+        const keyItemRight = board.flat().find(el => el.letter === letter && el.color === 'green');
+        const keyItemOther = board.flat().find(el => el.letter === letter && el.color);
+        const keyItem = keyItemRight || keyItemOther;
+        return keyItem?.color;
     }
     return (
         letters.map((letter, i) => (
-
             <button key={i}
                 className={`${s.keyboardKey} ${s[setKeyColor(letter)]}` }
                 onClick={() => { hadleClick(letter) }}>
