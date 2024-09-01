@@ -6,16 +6,12 @@ import { useEffect } from 'react';
 import deleteIcon from '../../assets/deleteIcon.svg';
 import KeyboardRow from './KeyboardRow';
 import { incrementLoses, incrementWins, setStatsActive } from '../../redux/statsSlice';
-import { checkWordInDict } from '../../utils/wordle';
+import { checkLose, checkWin, checkWordInDict, getGuessedWord } from '../../utils/wordle';
 
 
 const Keyboard = () => {
     const {word,wordLine,board,isWin,attemps,wordLength,isLose} = useSelector(state => state.wordle);
-    
     const dispatch = useDispatch();
-    const getGuessedWord = () =>{
-        return board[wordLine]?.map(cell=>cell.letter).join("").toLowerCase();
-    }
     const keyboardLayout = [
         ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
         ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
@@ -32,36 +28,30 @@ const Keyboard = () => {
             }, 1000);
         }
     }
-    const checkWin = (guessWord) =>{
-        return word === guessWord; 
-    }
-    const checkLose = () => {
-        return wordLine===attemps-1;
-    }
+
     const hadleClickEnter = () => {
-        if (!isWin && !isLose) {
-            const guessWord = getGuessedWord();
-            const isInDict = checkWordInDict(guessWord);
-            if(guessWord.length === wordLength && isInDict){
-                dispatch(setColors(guessWord));
-                dispatch(incrementWordLine());
-                if(checkWin(guessWord)){
-                    dispatch(setIsWin(true));
-                    dispatch(incrementWins());
-                    dispatch(setStatsActive(true));
-                }
-                else if(checkLose()){
-                    dispatch(setIsLose(true));
-                    dispatch(incrementLoses());
-                    dispatch(setStatsActive(true));
-                }
-            }
-            else {
-                setIncorrectAnimation();
-            }
+        if(isWin || isLose) return;
+        const guessWord = getGuessedWord(board,wordLine);
+        const isInDict = checkWordInDict(guessWord);
+        if(guessWord.length !== wordLength || !isInDict){
+            setIncorrectAnimation();
+            return;
         }
+        dispatch(setColors(guessWord));
+        dispatch(incrementWordLine());
+        if(checkWin(word,guessWord)){
+            dispatch(setIsWin(true));
+            dispatch(incrementWins());
+            dispatch(setStatsActive(true));
+        }
+        else if(checkLose(wordLine,attemps)){
+            dispatch(setIsLose(true));
+            dispatch(incrementLoses());
+            dispatch(setStatsActive(true));
+        }
+        
     }
-    const hadleClickDelete = () => {
+    const handleClickDelete = () => {
         dispatch(deleteLetter());
     }
     useEffect(()=>{
@@ -84,9 +74,9 @@ const Keyboard = () => {
                 <KeyboardRow letters={keyboardLayout[0]} />
             </div>
             <div className={`${s.row}`}>
-                <div className={`${s.keyboardKey} ${s.keyboardKeyEmpty}` }></div>
+                <div className={`${s.keyboardKey} ${s.keyboardKeyEmpty}`}></div>
                 <KeyboardRow letters={keyboardLayout[1]} />
-                <div className={`${s.keyboardKey} ${s.keyboardKeyEmpty}` }></div>
+                <div className={`${s.keyboardKey} ${s.keyboardKeyEmpty}`}></div>
             </div>
             <div className={`${s.row}`}>
                 <button
@@ -97,7 +87,7 @@ const Keyboard = () => {
                 <KeyboardRow letters={keyboardLayout[2]} />
                 <button
                     className={`${s.keyboardKey} ${s.deleteBtn}`}
-                    onClick={hadleClickDelete}>
+                    onClick={handleClickDelete}>
                     <img src={deleteIcon} alt="deleteIcon" />
                 </button>
             </div>
